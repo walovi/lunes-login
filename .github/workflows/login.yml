@@ -12,12 +12,8 @@ jobs:
       contents: write
       actions: write
     steps:
-      - name: 📥 下载私库脚本代码
+      - name: 📥 下载代码
         uses: actions/checkout@v6
-        with:
-          repository: ${{ github.repository_owner }}/lunes_login_private
-          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
-          path: private-scripts
 
       - name: 🐍 设置 Python
         uses: actions/setup-python@v6
@@ -46,13 +42,13 @@ jobs:
           TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
         run: |
           xvfb-run --auto-servernum --server-args="-screen 0 1920x1080x24" \
-            python3 private-scripts/lunes_login.py
+            python3 app.py
           
       - name: 🧹 清理旧的工作流运行记录
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          runs=$(gh run list --workflow="${{ github.workflow }}" --limit=100 --json databaseId --jq '.[].databaseId')
+          runs=$(gh run list --repo ${{ github.repository }} --workflow="${{ github.workflow }}" --limit=100 --json databaseId --jq '.[].databaseId')
           count=0
           for run_id in $runs; do
             count=$((count + 1))
