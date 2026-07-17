@@ -2,7 +2,7 @@ name: Auto-login-Lunes
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 1 */14 * *' # 每隔14天 12点(UTC 1点) 北京时间9点 运行
+    - cron: '0 1 */14 * *'
 
 jobs:
   Renew-lunes:
@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           repository: ${{ github.repository_owner }}/lunes_login_private
-          token: ${{ secrets.PAT_TOKEN }}
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
           path: private-scripts
 
       - name: 🐍 设置 Python
