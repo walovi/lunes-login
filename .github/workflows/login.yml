@@ -2,7 +2,7 @@ name: Auto-login-Lunes
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 1 */14 * *'
+    - cron: '0 1 */14 * *' # 每隔14天 12点(UTC 1点) 北京时间9点 运行
 
 jobs:
   Renew-lunes:
@@ -14,7 +14,6 @@ jobs:
     steps:
       - name: 📥 下载代码
         uses: actions/checkout@v6
-
       - name: 🐍 设置 Python
         uses: actions/setup-python@v6
         with:
